@@ -1,5 +1,10 @@
-function App() {
-  return <h1>Let's bora!</h1>;
-}
+import ExperienceBar from './components/ExperienceBar';
 
+const App = () => {
+  return (
+    <div className="container">
+      <ExperienceBar />
+    </div>
+  );
+};
 export default App;

@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Container } from './styles';
 
+let countdownTimeout: NodeJS.Timeout;
+
 const Countdown = () => {
-  const [time, setTime] = useState(25 * 60);
-  const [active, setActive] = useState(false);
+  const initialTime = 0.05 * 60;
+  // const initialTime = 25 * 60
+  const [time, setTime] = useState(initialTime);
+  const [isActive, setIsActive] = useState(false);
+  const [hasFinished, setHasFinished] = useState(false);
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -12,18 +17,23 @@ const Countdown = () => {
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
 
   const startCountdown = () => {
-    setActive(true);
+    setIsActive(true);
   };
-  const pauseCountdown = () => {
-    setActive(false);
+  const resetCountdown = () => {
+    clearTimeout(countdownTimeout);
+    setIsActive(false);
+    setTime(initialTime);
   };
   useEffect(() => {
-    if (active && time > 0) {
-      setTimeout(() => {
+    if (isActive && time > 0) {
+      countdownTimeout = setTimeout(() => {
         setTime(time - 1);
       }, 1000);
+    } else if (isActive && time === 0) {
+      setHasFinished(true);
+      setIsActive(false);
     }
-  }, [active, time]);
+  }, [isActive, time]);
 
   return (
     <Container>
@@ -38,9 +48,25 @@ const Countdown = () => {
           <span>{secondRight}</span>
         </div>
       </div>
-      <button type="button" onClick={startCountdown}>
-        Iniciar um ciclo
-      </button>
+
+      {hasFinished ? (
+        <button
+          disabled
+          type="button"
+          className="finished"
+          onClick={resetCountdown}
+        >
+          Ciclo encerrado
+        </button>
+      ) : isActive ? (
+        <button type="button" className="active" onClick={resetCountdown}>
+          Abandonar um ciclo
+        </button>
+      ) : (
+        <button type="button" className="inactive" onClick={startCountdown}>
+          Iniciar um ciclo
+        </button>
+      )}
     </Container>
   );
 };

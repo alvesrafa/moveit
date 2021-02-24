@@ -16,4 +16,10 @@ export const Container = styled.div`
     gap: 6.25rem;
     align-content: center;
   }
+  @media (max-width: 720px) {
+    > section {
+      grid-template-columns: 1fr;
+      padding: 3rem;
+    }
+  }
 `;

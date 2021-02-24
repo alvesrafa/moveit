@@ -3,6 +3,7 @@ import { CSSObject, DefaultTheme } from 'styled-components';
 export interface ThemeProps extends DefaultTheme {
   theme: {
     white: CSSObject;
+    boxShadow: CSSObject;
     background: CSSObject;
     grayLine: CSSObject;
     text: CSSObject;
@@ -18,6 +19,7 @@ export interface ThemeProps extends DefaultTheme {
 
 export const theme = {
   white: '#FFF',
+  boxShadow: 'rgba(0,0,0,0.05)',
   background: '#F2f3F5',
   grayLine: '#DcDDE0',
   text: '#666',

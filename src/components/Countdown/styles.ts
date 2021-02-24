@@ -13,7 +13,7 @@ export const Container = styled.div`
       display: flex;
       justify-content: space-evenly;
       background: ${(props) => props.theme.white};
-      box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 0 60px ${(props) => props.theme.boxShadow};
       border-radius: 5px;
       font-size: 8.5rem;
       text-align: center;
@@ -45,15 +45,31 @@ export const Container = styled.div`
 
     border: 0;
     border-radius: 5px;
-    background: ${(props) => props.theme.blue};
-    color: ${(props) => props.theme.white};
 
     font-size: 1.5rem;
     font-weight: 600;
     transition: background 0.2s;
 
-    &:hover {
+    &.inactive {
+      background: ${(props) => props.theme.blue};
+      color: ${(props) => props.theme.white};
+    }
+    &.inactive:hover {
       background: ${(props) => props.theme.blueDark};
+    }
+    &.active {
+      background: ${(props) => props.theme.white};
+      color: ${(props) => props.theme.title};
+    }
+    &.active:hover {
+      background: ${(props) => props.theme.red};
+      color: ${(props) => props.theme.white};
+    }
+
+    &:disabled {
+      background: ${(props) => props.theme.white};
+      color: ${(props) => props.theme.text};
+      cursor: not-allowed;
     }
   }
 `;

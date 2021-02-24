@@ -2,20 +2,24 @@ import { useChallenges } from '../../contexts';
 import { Container } from './styles';
 
 const ChallengeBox = () => {
-  const { hasNewChallenge } = useChallenges();
+  const { activeChallenge, resetChallenge } = useChallenges();
 
   return (
     <Container>
-      {hasNewChallenge ? (
+      {activeChallenge ? (
         <div className="unlocked">
-          <header>Ganhe 400 xp</header>
+          <header>Ganhe {activeChallenge.amount} xp</header>
           <main>
-            <img src="icons/body.svg" />
+            <img src={`icons/${activeChallenge.type}.svg`} />
             <strong>Novo desafio</strong>
-            <p>Levante e faça uma caminhada de 3 minutos</p>
+            <p>{activeChallenge?.description}</p>
           </main>
           <footer>
-            <button type="button" className="challenge-failed">
+            <button
+              type="button"
+              onClick={resetChallenge}
+              className="challenge-failed"
+            >
               Falhei
             </button>
             <button type="button" className="challenge-succeeded">
@@ -25,10 +29,10 @@ const ChallengeBox = () => {
         </div>
       ) : (
         <div className="blocked">
-          <strong>Finalize um ciclo para receber um desafio</strong>
+          <strong>Finalize para receber um desafio.</strong>
           <p>
             <img src="icons/level-up.svg" alt="Level Up" />
-            Avance de level completando desafios.
+            Realizando os desafios você ganha mais EXP e se mantém saudável. 😉
           </p>
         </div>
       )}

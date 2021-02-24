@@ -22,6 +22,8 @@ export const Container = styled.header`
       position: absolute;
       top: 12px;
       transform: translateX(-50%);
+
+      transition: all 1s;
     }
   }
 `;

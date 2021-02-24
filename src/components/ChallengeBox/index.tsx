@@ -1,11 +1,12 @@
+import { useChallenges } from '../../contexts';
 import { Container } from './styles';
 
 const ChallengeBox = () => {
-  const hasChallenge = true;
+  const { hasNewChallenge } = useChallenges();
 
   return (
     <Container>
-      {hasChallenge ? (
+      {hasNewChallenge ? (
         <div className="unlocked">
           <header>Ganhe 400 xp</header>
           <main>

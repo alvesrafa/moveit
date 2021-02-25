@@ -1,8 +1,12 @@
-import { useChallenges } from '../../contexts';
+import { useTheme } from '../../contexts/ThemeContext';
+import { useChallenges } from '../../contexts/ChallengesContext';
 import { Container } from './styles';
+import ToogleTheme from '../ToogleTheme';
 
 const Profile = () => {
   const { level } = useChallenges();
+
+  const { toogleTheme, theme } = useTheme();
 
   return (
     <Container>
@@ -14,6 +18,7 @@ const Profile = () => {
           Level {level}
         </p>
       </div>
+      <ToogleTheme onChange={toogleTheme} theme={theme} />
     </Container>
   );
 };

@@ -1,4 +1,4 @@
-import { useChallenges } from '../../contexts';
+import { useChallenges } from '../../contexts/ChallengesContext';
 import { Container } from './styles';
 
 const CompletedChallenges = () => {

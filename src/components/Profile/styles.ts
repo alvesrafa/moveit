@@ -10,7 +10,7 @@ export const Container = styled.div`
     border-radius: 50%;
   }
   > div {
-    margin-left: 1.5rem;
+    margin: 0 1.7rem;
 
     > strong {
       font-size: 1.5rem;

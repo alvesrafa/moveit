@@ -22,7 +22,7 @@ export const Container = styled.header`
       position: absolute;
       top: 12px;
       transform: translateX(-50%);
-
+      font-size: 0.7rem;
       transition: all 1s;
     }
   }

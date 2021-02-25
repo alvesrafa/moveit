@@ -33,8 +33,8 @@ export default function CountdownProvider({
 }: CountdownProviderProps) {
   const { startNewChallenge } = useChallenges();
 
-  const initialTime = 0.05 * 60;
-  // const initialTime = 25 * 60
+  const initialTime = 0.05 * 60; // 2 segundos
+  // const initialTime = 25 * 60 // 25 minutos
   const [time, setTime] = useState(initialTime);
   const [isActive, setIsActive] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);

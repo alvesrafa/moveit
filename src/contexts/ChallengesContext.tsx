@@ -1,7 +1,12 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useState,
+  useEffect,
+} from 'react';
 import { toast } from 'react-toastify';
 import challenges from '../assets/challenges.json';
-import { useCountdown } from './CountdownContext';
 interface ChallengesProviderProps {
   children: ReactNode;
 }
@@ -31,10 +36,13 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   const [challengesCompleted, setChallengesCompleteds] = useState(0);
   const [activeChallenge, setActiveChallenge] = useState(null);
 
+  useEffect(() => {
+    Notification.requestPermission();
+  }, []);
+
   const expToNextLevel = Math.pow((level + 1) * 4, 2);
 
   const levelUp = () => {
-    toast('Incrível, você subiu de level 😍');
     setLevel(level + 1);
   };
 
@@ -43,12 +51,20 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     const challenge = challenges[randomChallengeIndex];
 
     setActiveChallenge(challenge);
+
+    new Audio('/notification.mp3').play();
+
+    if (Notification.permission === 'granted') {
+      new Notification('Novo desafio! 🎉', {
+        icon: '/favicon.png',
+        body: `Valendo ${challenge.amount} XP`,
+        vibrate: 2,
+      });
+    }
   };
 
   const completeChallenge = () => {
     if (!activeChallenge) return;
-
-    toast.success('Mandou bem! 😎');
 
     const { amount } = activeChallenge;
 
@@ -56,8 +72,14 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
 
     if (finalExperience >= expToNextLevel) {
       finalExperience = finalExperience - expToNextLevel;
-
+      toast.success('Incrível, você subiu de level 😍', {
+        position: 'top-center',
+      });
       levelUp();
+    } else {
+      toast.success('Mandou bem! 😎', {
+        position: 'top-center',
+      });
     }
 
     setCurrentExp(finalExperience);
@@ -66,7 +88,9 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   };
 
   const resetChallenge = () => {
-    toast('Poxa 😥 na próxima você consegue!');
+    toast('Poxa 😥 na próxima você consegue!', {
+      position: 'top-center',
+    });
     setActiveChallenge(null);
   };
 

@@ -1,5 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 import challenges from '../assets/challenges.json';
+import { useCountdown } from './CountdownContext';
 interface ChallengesProviderProps {
   children: ReactNode;
 }
@@ -13,7 +15,7 @@ interface ChallengesContextProps {
     description: string;
     amount: number;
   };
-
+  completeChallenge: () => void;
   resetChallenge: () => void;
   levelUp: () => void;
   startNewChallenge: () => void;
@@ -32,6 +34,7 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   const expToNextLevel = Math.pow((level + 1) * 4, 2);
 
   const levelUp = () => {
+    toast('Incrível, você subiu de level 😍');
     setLevel(level + 1);
   };
 
@@ -42,7 +45,28 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     setActiveChallenge(challenge);
   };
 
+  const completeChallenge = () => {
+    if (!activeChallenge) return;
+
+    toast.success('Mandou bem! 😎');
+
+    const { amount } = activeChallenge;
+
+    let finalExperience = currentExp + amount;
+
+    if (finalExperience >= expToNextLevel) {
+      finalExperience = finalExperience - expToNextLevel;
+
+      levelUp();
+    }
+
+    setCurrentExp(finalExperience);
+    setActiveChallenge(null);
+    setChallengesCompleteds(challengesCompleted + 1);
+  };
+
   const resetChallenge = () => {
+    toast('Poxa 😥 na próxima você consegue!');
     setActiveChallenge(null);
   };
 
@@ -55,6 +79,7 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
         activeChallenge,
         expToNextLevel,
 
+        completeChallenge,
         resetChallenge,
         levelUp,
         startNewChallenge,

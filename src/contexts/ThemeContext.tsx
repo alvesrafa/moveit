@@ -16,7 +16,7 @@ export const ThemeContext = createContext({} as ThemeContextProps);
 export const useTheme = () => useContext(ThemeContext);
 
 export default function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setTheme] = useState(null);
+  const [theme, setTheme] = useState('light');
 
   const toogleTheme = () => {
     if (theme === 'light') {

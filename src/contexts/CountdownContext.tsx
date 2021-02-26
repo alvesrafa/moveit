@@ -6,8 +6,6 @@ import {
   useEffect,
 } from 'react';
 
-import { toast } from 'react-toastify';
-import challenges from '../assets/challenges.json';
 import { useChallenges } from './ChallengesContext';
 
 interface CountdownProviderProps {
@@ -28,13 +26,11 @@ export const useCountdown = () => useContext(CountdownContext);
 
 let countdownTimeout: NodeJS.Timeout;
 
-export default function CountdownProvider({
-  children,
-}: CountdownProviderProps) {
+export function CountdownProvider({ children }: CountdownProviderProps) {
   const { startNewChallenge } = useChallenges();
 
-  const initialTime = 0.05 * 60; // 2 segundos
-  // const initialTime = 25 * 60 // 25 minutos
+  // const initialTime = 0.05 * 60; // 2 segundos
+  const initialTime = 25 * 60; // 25 minutos
   const [time, setTime] = useState(initialTime);
   const [isActive, setIsActive] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);

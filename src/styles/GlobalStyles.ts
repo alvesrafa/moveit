@@ -38,6 +38,7 @@ const GlboalStyles = createGlobalStyle<ThemeProps>`
     text-decoration: none;
   }
 
+ 
   
 `;
 

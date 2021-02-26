@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background-color: ${(props) => props.theme.blue};
+  background-color: ${(props) => props.theme.blueTwitter};
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -59,7 +59,7 @@ export const Container = styled.div`
         .github-wrapper {
           display: flex;
           align-items: center;
-          color: #b2b9ff;
+          color: #fff;
           > svg {
             width: 46px;
             height: 46px;
@@ -78,7 +78,7 @@ export const Container = styled.div`
           padding: 2rem;
           transition: filter 0.2s;
           color: #fff;
-          background: #4953b8;
+          background: ${(props) => props.theme.blueDark};
           font-weight: 700;
 
           display: flex;

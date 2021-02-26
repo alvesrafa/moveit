@@ -30,9 +30,9 @@ export const light = {
   title: '#2e384d',
   red: '#e8384d',
   green: '#4cd62b',
-  blue: '#5975e0',
-  blueDark: '#4953b8',
-  blueTwitter: '#2aa9e0',
+  blue: '#F59086',
+  blueDark: '#DE886F',
+  blueTwitter: '#FFADA6',
   themeColor: '#e5de44',
 };
 
@@ -47,8 +47,8 @@ export const dark = {
   title: '#dfe3ec',
   red: '#e8384d',
   green: '#4cd62b',
-  blue: '#5975e0',
-  blueDark: '#4953b8',
-  blueTwitter: '#2aa9e0',
+  blue: '#F59086',
+  blueDark: '#DE886F',
+  blueTwitter: '#FFADA6',
   themeColor: '#1c375c',
 };

@@ -20,12 +20,12 @@ const login = () => {
 
           <div className="login-wrapper">
             <div className="github-wrapper">
-              <AiFillGithub color="#b2b9ff" size={46} />
+              <AiFillGithub color="#FFF" size={46} />
               <p>Faça login com seu GitHub para começar</p>
             </div>
 
             <button type="button" onClick={loginWithGitHub}>
-              Entrar com Github <AiFillGithub color="#FFF" size={24} />
+              Entrar com Github <AiFillGithub color="#FFF" size={32} />
             </button>
           </div>
         </div>

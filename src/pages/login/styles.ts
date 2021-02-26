@@ -60,9 +60,9 @@ export const Container = styled.div`
           display: flex;
           align-items: center;
           color: #b2b9ff;
-          > img {
-            width: 40px;
-            height: 40px;
+          > svg {
+            width: 46px;
+            height: 46px;
             margin-right: 1rem;
           }
           > p {
@@ -80,6 +80,13 @@ export const Container = styled.div`
           color: #fff;
           background: #4953b8;
           font-weight: 700;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          > svg {
+            margin-left: 1rem;
+          }
           &:hover {
             cursor: pointer;
             filter: brightness(0.9);

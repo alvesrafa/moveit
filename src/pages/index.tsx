@@ -1,11 +1,8 @@
 import { GetServerSideProps } from 'next';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
 import Main from './main';
 import Login from './login';
-import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 
 interface HomeProps {
   level: number;

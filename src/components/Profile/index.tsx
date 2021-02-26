@@ -11,9 +11,9 @@ const Profile = () => {
 
   return (
     <Container>
-      <img src={userData.photo} alt="Rafael Alves" />
+      <img src={userData?.photo} alt="Rafael Alves" />
       <div>
-        <strong>{userData.name}</strong>
+        <strong>{userData?.name}</strong>
         <p>
           <img src="icons/level.svg" alt="Level" />
           Level {level}

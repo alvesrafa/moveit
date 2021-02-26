@@ -18,6 +18,7 @@ interface AuthContextProps {
     email: string;
   };
   loginWithGitHub: () => void;
+  logout: () => void;
 }
 
 export const AuthContext = createContext({} as AuthContextProps);
@@ -29,6 +30,7 @@ import firebase from '../api/firebase';
 export function AuthProvider({ children }: AuthProviderProps) {
   const [isLogged, setIsLogged] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -44,6 +46,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUserData(null);
         setIsLogged(false);
       }
+      setLoading(false);
     });
   }, []);
 
@@ -66,9 +69,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         isLogged,
         userData,
         loginWithGitHub,
+        logout,
       }}
     >
-      {children}
+      {loading ? <p>carregando</p> : children}
     </AuthContext.Provider>
   );
 }

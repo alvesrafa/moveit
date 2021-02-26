@@ -7,7 +7,8 @@ import ExperienceBar from '../../components/ExperienceBar';
 import Profile from '../../components/Profile';
 import { CountdownProvider } from '../../contexts/CountdownContext';
 import { ChallengesProvider } from '../../contexts/ChallengesContext';
-import { Container } from './styles';
+import { Content, Container } from './styles';
+import SideMenu from '../../components/SideMenu';
 
 interface HomeProps {
   level: number;
@@ -24,23 +25,26 @@ export default function Home(props: HomeProps) {
       currentExp={currentExp}
       challengesCompleted={challengesCompleted}
     >
+      <Head>
+        <title>Início | move.it</title>
+      </Head>
       <Container>
-        <Head>
-          <title>Início | move.it</title>
-        </Head>
-        <ExperienceBar />
-        <CountdownProvider>
-          <section>
-            <div>
-              <Profile />
-              <CompletedChallenges />
-              <Countdown />
-            </div>
-            <div>
-              <ChallengeBox />
-            </div>
-          </section>
-        </CountdownProvider>
+        <SideMenu />
+        <Content>
+          <ExperienceBar />
+          <CountdownProvider>
+            <section>
+              <div>
+                <Profile />
+                <CompletedChallenges />
+                <Countdown />
+              </div>
+              <div>
+                <ChallengeBox />
+              </div>
+            </section>
+          </CountdownProvider>
+        </Content>
       </Container>
     </ChallengesProvider>
   );

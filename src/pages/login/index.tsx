@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useAuth } from '../../contexts/AuthContext';
 import { Container } from './styles';
 
+import { AiFillGithub } from 'react-icons/ai';
 const login = () => {
   const { loginWithGitHub } = useAuth();
   return (
@@ -19,12 +20,12 @@ const login = () => {
 
           <div className="login-wrapper">
             <div className="github-wrapper">
-              <img src="/icons/github.svg" alt="GitHub" />
+              <AiFillGithub color="#b2b9ff" size={46} />
               <p>Faça login com seu GitHub para começar</p>
             </div>
 
             <button type="button" onClick={loginWithGitHub}>
-              Entrar com Github
+              Entrar com Github <AiFillGithub color="#FFF" size={24} />
             </button>
           </div>
         </div>

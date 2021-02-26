@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import { Container } from './styles';
+import SideMenu from '../../../components/SideMenu';
+import { Container, Content } from './styles';
 
 const leaderboard = () => {
   return (
@@ -7,7 +8,10 @@ const leaderboard = () => {
       <Head>
         <title>Ranking | move.it</title>
       </Head>
-      <h1>leaderboard</h1>
+      <SideMenu />
+      <Content>
+        <h1>leaderboard</h1>
+      </Content>
     </Container>
   );
 };

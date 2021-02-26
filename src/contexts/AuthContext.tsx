@@ -25,7 +25,7 @@ export const AuthContext = createContext({} as AuthContextProps);
 
 export const useAuth = () => useContext(AuthContext);
 
-import firebase from '../api/firebase';
+import firebase from '../services/firebase';
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [isLogged, setIsLogged] = useState(false);

@@ -37,10 +37,14 @@ export const ChallengesContext = createContext({} as ChallengesContextProps);
 
 export const useChallenges = () => useContext(ChallengesContext);
 
+import axios from 'axios';
+import { useAuth } from './AuthContext';
+
 export function ChallengesProvider({
   children,
   ...rest
 }: ChallengesProviderProps) {
+  const { userData } = useAuth();
   const [level, setLevel] = useState(rest.level ?? 1);
   const [currentExp, setCurrentExp] = useState(rest.currentExp ?? 0);
   const [challengesCompleted, setChallengesCompleteds] = useState(
@@ -49,12 +53,14 @@ export function ChallengesProvider({
   const [activeChallenge, setActiveChallenge] = useState(null);
 
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
-
+  useEffect(() => {
+    axios.post('/api/user', { level, currentExp, email: userData?.email });
+  }, []);
   useEffect(() => {
     Cookies.set('level', String(level));
     Cookies.set('currentExp', String(currentExp));
     Cookies.set('challengesCompleted', String(challengesCompleted));
-  }, []);
+  }, [level, currentExp, challengesCompleted]);
 
   useEffect(() => {
     Notification.requestPermission();

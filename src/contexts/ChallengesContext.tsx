@@ -12,9 +12,9 @@ import challenges from '../utils/challenges.json';
 import LevelUpModal from '../components/LevelUpModal';
 interface ChallengesProviderProps {
   children: ReactNode;
-  level: number;
-  currentExp: number;
-  challengesCompleted: number;
+  // level: number;
+  // currentExp: number;
+  // challengesCompleted: number;
 }
 interface ChallengesContextProps {
   level: number;
@@ -40,26 +40,39 @@ export const useChallenges = () => useContext(ChallengesContext);
 import axios from 'axios';
 import { useAuth } from './AuthContext';
 
-export function ChallengesProvider({
-  children,
-  ...rest
-}: ChallengesProviderProps) {
+export function ChallengesProvider({ children }: ChallengesProviderProps) {
   const { userData } = useAuth();
-  const [level, setLevel] = useState(rest.level ?? 1);
-  const [currentExp, setCurrentExp] = useState(rest.currentExp ?? 0);
-  const [challengesCompleted, setChallengesCompleteds] = useState(
-    rest.challengesCompleted ?? 0
-  );
+  const [level, setLevel] = useState(1);
+  const [currentExp, setCurrentExp] = useState(0);
+  const [challengesCompleted, setChallengesCompleteds] = useState(0);
   const [activeChallenge, setActiveChallenge] = useState(null);
 
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    axios.post('/api/user', { level, currentExp, email: userData?.email });
+    axios
+      .get(`/api/user/${userData?.email}`)
+      .then((response) => {
+        setChallengesCompleteds(response.data.user.challengesCompleted);
+        setCurrentExp(response.data.user.currentExp);
+        setLevel(response.data.user.level);
+      })
+      .catch((e) => {
+        console.log('Erro ao buscar dados do user', e);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
+
   useEffect(() => {
-    Cookies.set('level', String(level));
-    Cookies.set('currentExp', String(currentExp));
-    Cookies.set('challengesCompleted', String(challengesCompleted));
+    axios.post(`/api/user`, {
+      level: level,
+      currentExp,
+      email: userData?.email,
+      challengesCompleted,
+    });
   }, [level, currentExp, challengesCompleted]);
 
   useEffect(() => {
@@ -139,7 +152,7 @@ export function ChallengesProvider({
         startNewChallenge,
       }}
     >
-      {children}
+      {!loading && children}
       {isLevelUpModalOpen && <LevelUpModal />}
     </ChallengesContext.Provider>
   );

@@ -10,6 +10,9 @@ import { ChallengesProvider } from '../../contexts/ChallengesContext';
 import { Content, Container } from './styles';
 import SideMenu from '../../components/SideMenu';
 
+import axios from 'axios';
+import { useAuth } from '../../contexts/AuthContext';
+import { useEffect } from 'react';
 interface HomeProps {
   level: number;
   currentExp: number;
@@ -17,14 +20,8 @@ interface HomeProps {
 }
 
 export default function Home(props: HomeProps) {
-  const { level, currentExp, challengesCompleted } = props;
-
   return (
-    <ChallengesProvider
-      level={level}
-      currentExp={currentExp}
-      challengesCompleted={challengesCompleted}
-    >
+    <ChallengesProvider>
       <Head>
         <title>Início | move.it</title>
       </Head>

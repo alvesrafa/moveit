@@ -50,29 +50,31 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    axios
-      .get(`/api/user/${userData?.email}`)
-      .then((response) => {
-        setChallengesCompleteds(response.data.user.challengesCompleted);
-        setCurrentExp(response.data.user.currentExp);
-        setLevel(response.data.user.level);
-      })
-      .catch((e) => {
-        console.log('Erro ao buscar dados do user', e);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  useEffect(() => {}, []);
 
   useEffect(() => {
-    axios.post(`/api/user`, {
-      level: level,
-      currentExp,
-      email: userData?.email,
-      challengesCompleted,
-    });
+    if (loading) {
+      axios
+        .get(`/api/user/${userData?.email}`)
+        .then((response) => {
+          setChallengesCompleteds(response.data.user.challengesCompleted);
+          setCurrentExp(response.data.user.currentExp);
+          setLevel(response.data.user.level);
+        })
+        .catch((e) => {
+          console.log('Erro ao buscar dados do user', e);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      axios.post(`/api/user`, {
+        level: level,
+        currentExp,
+        email: userData?.email,
+        challengesCompleted,
+      });
+    }
   }, [level, currentExp, challengesCompleted]);
 
   useEffect(() => {

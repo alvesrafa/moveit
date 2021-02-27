@@ -34,13 +34,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      console.log('logado?', user);
       if (user) {
+        console.log('user', user);
         setUserData({
           name: user.displayName,
           photo: user.photoURL,
           email: user.email,
         });
+
         setIsLogged(true);
       } else {
         setUserData(null);

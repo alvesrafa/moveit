@@ -21,7 +21,13 @@ const connectToDatabase = async (uri: string) => {
 export default async function (request: NowRequest, response: NowResponse) {
   if (request.method === 'POST') {
     try {
-      const { level, email, currentExp, challengesCompleted } = request.body;
+      const {
+        level,
+        email,
+        currentExp,
+        challengesCompleted,
+        photo,
+      } = request.body;
 
       const db = await connectToDatabase(process.env.MONGODB_URI);
 
@@ -29,11 +35,10 @@ export default async function (request: NowRequest, response: NowResponse) {
 
       const update = await collection.findOne({ email: email });
 
-      console.log('update', update);
       if (update) {
         await collection.updateOne(
           { _id: update._id },
-          { $set: { level, currentExp, challengesCompleted } }
+          { $set: { level, currentExp, challengesCompleted, photo } }
         );
       } else {
         await collection.insertOne({
@@ -41,6 +46,7 @@ export default async function (request: NowRequest, response: NowResponse) {
           email,
           currentExp,
           challengesCompleted,
+          photo,
         });
       }
 
@@ -49,22 +55,23 @@ export default async function (request: NowRequest, response: NowResponse) {
       return response.status(400).json({ success: false });
     }
   } else if (request.method === 'GET') {
-    try {
-      const db = await connectToDatabase(process.env.MONGODB_URI);
+    const db = await connectToDatabase(process.env.MONGODB_URI);
 
-      const collection = db.collection('users');
-      let users = [];
-      await collection.find().toArray((err, result) => {
-        if (err) throw err;
-        users = result || [];
-        return true;
-      });
+    const collection = db.collection('users');
 
-      return response.status(200).json({ success: true, users: users || [] });
-    } catch (e) {
-      console.log('FAILED GET', e);
-      return response.status(400).json({ success: false });
-    }
+    return new Promise((resolve, reject) => {
+      collection
+        .find()
+        .sort({ level: -1 })
+        .toArray((err, docs) => {
+          if (err)
+            return response
+              .status(400)
+              .json({ success: false, error: reject(err) });
+
+          return response.status(200).json({ success: true, users: docs });
+        });
+    });
   } else {
     return response
       .status(200)

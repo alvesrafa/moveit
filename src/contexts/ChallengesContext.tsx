@@ -57,9 +57,9 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
       axios
         .get(`/api/user/${userData?.email}`)
         .then((response) => {
-          setChallengesCompleteds(response.data.user.challengesCompleted);
-          setCurrentExp(response.data.user.currentExp);
-          setLevel(response.data.user.level);
+          setChallengesCompleteds(response.data.user.challengesCompleted || 0);
+          setCurrentExp(response.data.user.currentExp || 0);
+          setLevel(response.data.user.level || 1);
         })
         .catch((e) => {
           console.log('Erro ao buscar dados do user', e);
@@ -69,10 +69,11 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
         });
     } else {
       axios.post(`/api/user`, {
-        level: level,
+        level: level || 1,
         currentExp,
         email: userData?.email,
         challengesCompleted,
+        photo: userData.photo,
       });
     }
   }, [level, currentExp, challengesCompleted]);
